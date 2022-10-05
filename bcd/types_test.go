@@ -55,6 +55,11 @@ func TestAton(t *testing.T) {
 			args: args{stringrep: "1.23456E-1"},
 			want: Number{Sign: 0, Exponent: -1, Digits: [12]byte{1, 2, 3, 4, 5, 6, 0, 0, 0, 0, 0, 0}},
 		},
+		{
+			name: "3E2",
+			args: args{stringrep: "3E2"},
+			want: Number{Sign: 0, Exponent: 2, Digits: [12]byte{3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -85,6 +90,16 @@ func TestNumber_String(t *testing.T) {
 			name:   "1.23456",
 			fields: fields{Sign: 0, Exponent: 0, Digits: [12]byte{1, 2, 3, 4, 5, 6, 0, 0, 0, 0, 0, 0}},
 			want:   "1.23456E0",
+		},
+		{
+			name:   "1.2345E6",
+			fields: fields{Sign: 0, Exponent: 6, Digits: [12]byte{1, 2, 3, 4, 5, 0, 0, 0, 0, 0, 0, 0}},
+			want:   "1.2345E6",
+		},
+		{
+			name:   "9.99999999999E99",
+			fields: fields{Sign: 0, Exponent: 99, Digits: [12]byte{9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}},
+			want:   "9.99999999999E99",
 		},
 	}
 	for _, tt := range tests {
