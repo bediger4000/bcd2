@@ -69,3 +69,34 @@ func TestAton(t *testing.T) {
 		})
 	}
 }
+
+func TestNumber_String(t *testing.T) {
+	type fields struct {
+		Sign     int8
+		Exponent int8
+		Digits   [12]byte
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		want   string
+	}{
+		{
+			name:   "1.23456",
+			fields: fields{Sign: 0, Exponent: 0, Digits: [12]byte{1, 2, 3, 4, 5, 6, 0, 0, 0, 0, 0, 0}},
+			want:   "1.23456E0",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			b := Number{
+				Sign:     tt.fields.Sign,
+				Exponent: tt.fields.Exponent,
+				Digits:   tt.fields.Digits,
+			}
+			if got := b.String(); got != tt.want {
+				t.Errorf("Number.String() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
