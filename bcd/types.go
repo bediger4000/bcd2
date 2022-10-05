@@ -8,10 +8,13 @@ import (
 
 type Number struct {
 	Sign     byte
-	Exponent byte
-	Digits   [12]byte
+	Exponent byte     // signed 2s-complement
+	Digits   [12]byte // most significant at index 0
 }
 
+// Implided decimal point between Digits[0] and Digits[1]
+
+// Aton converts a suitably-formatted string to a BCD number type
 func Aton(stringrep string) (Number, error) {
 	stringrep = strings.TrimSpace(stringrep)
 
@@ -66,6 +69,7 @@ func Aton(stringrep string) (Number, error) {
 	return b, nil
 }
 
+// String converts a BCD number to a printable string
 func (b Number) String() string {
 	sign := ""
 	if b.Sign != 0 {
