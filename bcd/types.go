@@ -7,8 +7,8 @@ import (
 )
 
 type Number struct {
-	Sign     byte
-	Exponent byte     // signed 2s-complement
+	Sign     int8
+	Exponent int8     // signed 2s-complement
 	Digits   [12]byte // most significant at index 0
 }
 
@@ -52,19 +52,22 @@ func Aton(stringrep string) (Number, error) {
 		}
 	}
 
-	var exponent byte
+	var exponent int8
 	if foundE {
 		for _, r := range stringrep[eAt+1:] {
-			exponent = 10*exponent + (byte(r) - '0')
+			exponent = 10*exponent + (int8(r) - '0')
 		}
 	}
 
 	if decimalPointAt > -1 {
-		exponent += byte(decimalPointAt - 1)
+		exponent += int8(decimalPointAt - 1)
+	} else {
+		// implied decimal point after final digit
+		exponent = int8(digits - 1)
 	}
 
 	b.Exponent = exponent
-	b.Sign = byte(sign)
+	b.Sign = int8(sign)
 
 	return b, nil
 }
