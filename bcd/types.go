@@ -54,9 +54,16 @@ func Aton(stringrep string) (Number, error) {
 
 	var exponent int8
 	if foundE {
-		for _, r := range stringrep[eAt+1:] {
+		eAt++
+		var exponentSign int8 = 1
+		if stringrep[eAt] == '-' {
+			exponentSign = -1
+			eAt++
+		}
+		for _, r := range stringrep[eAt:] {
 			exponent = 10*exponent + (int8(r) - '0')
 		}
+		exponent *= exponentSign
 	}
 
 	if decimalPointAt > -1 {
