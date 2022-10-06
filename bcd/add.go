@@ -14,17 +14,30 @@ func Add(x, y Number) Number {
 		scratch[i] = big.Digits[i]
 	}
 
-	least := big.Exponent + small.Exponent
+	least := big.Exponent - small.Exponent
+	carry := byte(0)
 	for i := 0; i < 12; i++ {
-		scratch[least] += small.Digits[i]
+		scratch[least] += small.Digits[i] + carry
+		carry = 0
+		if scratch[least] > 9 {
+			scratch[least] = 0
+			carry = 1
+		}
 		least++
 	}
 
 	var sum Number
-	for i := 0; i < 12; i++ {
+
+	var i int
+	if carry == 1 {
+		sum.Digits[0] = 1
+		i = 1
+		sum.Exponent = 1
+	}
+	for ; i < 12; i++ {
 		sum.Digits[i] = scratch[i]
 	}
-	sum.Exponent = big.Exponent
+	sum.Exponent += big.Exponent
 
 	return sum
 }
