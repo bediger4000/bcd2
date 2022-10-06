@@ -61,6 +61,11 @@ func TestAdd(t *testing.T) {
 			args: args{x: Number{}, y: twelve},
 			want: twelve,
 		},
+		{
+			name: "10+12",
+			args: args{x: ten, y: twelve},
+			want: Number{Sign: 0, Exponent: 1, Digits: [12]byte{2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
