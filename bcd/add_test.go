@@ -76,6 +76,11 @@ func TestAdd(t *testing.T) {
 			args: args{x: ninetyNine, y: one},
 			want: Number{Sign: 0, Exponent: 2, Digits: [12]byte{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
 		},
+		{
+			name: "1+99",
+			args: args{x: one, y: ninetyNine},
+			want: Number{Sign: 0, Exponent: 2, Digits: [12]byte{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
