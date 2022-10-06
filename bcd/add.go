@@ -14,28 +14,38 @@ func Add(x, y Number) Number {
 		scratch[i] = big.Digits[i]
 	}
 
-	least := big.Exponent - small.Exponent
+	// At what index into scratch[] should we start adding?
+	index := big.Exponent - small.Exponent
 	for i := 0; i < 12; i++ {
-		scratch[least] += small.Digits[i]
-		least++
+		scratch[index] += small.Digits[i]
+		index++
+	}
+
+	// Do carrying
+	carry := byte(0)
+	for i := 23; i >= 0; i-- {
+		scratch[i] += carry
+		carry = 0
+		if scratch[i] > 9 {
+			scratch[i] -= 10
+			carry = 1
+		}
 	}
 
 	var sum Number
+	i := 0
+	if carry == 1 {
+		sum.Digits[0] = 1
+		i = 1
+		sum.Exponent = 1
+	}
 
-	var carry byte
-	for i := 11; i <= 0; i-- {
-		prevCarry := carry
-		carry = 0
-		if scratch[i] > 9 {
-			scratch[i] = 0
-			carry = 1
-		}
-		sum.Digits[i] = scratch[i] + prevCarry
+	for j := 0; j < 12 && i < 12; j++ {
+		sum.Digits[i] = scratch[j]
+		i++
 	}
 
 	sum.Exponent += big.Exponent
-	if carry == 1 {
-	}
 
 	return sum
 }
