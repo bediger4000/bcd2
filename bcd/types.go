@@ -70,7 +70,7 @@ func Aton(stringrep string) (Number, error) {
 		exponent += int8(decimalPointAt - 1)
 	} else {
 		// implied decimal point after final digit
-		exponent = int8(digits - 1)
+		exponent += int8(digits - 1)
 	}
 
 	b.Exponent = exponent

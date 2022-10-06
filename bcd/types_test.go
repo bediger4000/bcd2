@@ -60,6 +60,16 @@ func TestAton(t *testing.T) {
 			args: args{stringrep: "3E2"},
 			want: Number{Sign: 0, Exponent: 2, Digits: [12]byte{3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
 		},
+		{
+			name: "300",
+			args: args{stringrep: "3E2"},
+			want: Number{Sign: 0, Exponent: 2, Digits: [12]byte{3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+		},
+		{
+			name: "300e0",
+			args: args{stringrep: "300e0"},
+			want: Number{Sign: 0, Exponent: 2, Digits: [12]byte{3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
