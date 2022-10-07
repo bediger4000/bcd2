@@ -1,8 +1,10 @@
 package bcd
 
+const scratchSize = 24
+
 // Add creates a BCD number by adding 2 BCD numbers
 func Add(x, y Number) Number {
-	var scratch [24]byte
+	var scratch [scratchSize]byte
 
 	big := x
 	small := y
@@ -16,7 +18,7 @@ func Add(x, y Number) Number {
 
 	// At what index into scratch[] should we start adding?
 	index := big.Exponent - small.Exponent
-	for i := 0; i < 12; i++ {
+	for i := 0; i < 12 && index < 24; i++ {
 		scratch[index] += small.Digits[i]
 		index++
 	}
