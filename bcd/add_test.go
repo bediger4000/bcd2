@@ -30,6 +30,12 @@ var ninetyNine = Number{
 	Exponent: 1,
 	Digits:   [12]byte{9, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 }
+var oneE15 = Number{
+	Sign:     0,
+	Exponent: 15,
+	Digits:   [12]byte{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+}
+var zero = Number{}
 
 func TestAdd(t *testing.T) {
 	type args struct {
@@ -41,6 +47,11 @@ func TestAdd(t *testing.T) {
 		args args
 		want Number
 	}{
+		{
+			name: "0+0",
+			args: args{x: zero, y: zero},
+			want: zero,
+		},
 		{
 			name: "1+1",
 			args: args{x: one, y: one},
@@ -80,6 +91,11 @@ func TestAdd(t *testing.T) {
 			name: "1+99",
 			args: args{x: one, y: ninetyNine},
 			want: Number{Sign: 0, Exponent: 2, Digits: [12]byte{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+		},
+		{
+			name: "1E15+1E0",
+			args: args{x: oneE15, y: one},
+			want: oneE15,
 		},
 	}
 	for _, tt := range tests {
