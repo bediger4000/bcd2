@@ -18,7 +18,7 @@ func Add(x, y Number) Number {
 
 	// At what index into scratch[] should we start adding?
 	index := big.Exponent - small.Exponent
-	for i := 0; i < 12 && index < 24; i++ {
+	for i := 0; i < 12 && index < scratchSize; i++ {
 		scratch[index] += small.Digits[i]
 		index++
 	}

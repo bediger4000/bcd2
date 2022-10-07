@@ -6,10 +6,12 @@ import (
 	"unicode"
 )
 
+const significantDigits = 12
+
 type Number struct {
 	Sign     int8
-	Exponent int8     // signed 2s-complement
-	Digits   [12]byte // most significant at index 0
+	Exponent int8                    // signed 2s-complement
+	Digits   [significantDigits]byte // most significant at index 0
 }
 
 // Implided decimal point between Digits[0] and Digits[1]
@@ -40,7 +42,7 @@ func Aton(stringrep string) (Number, error) {
 			decimalPointAt = digits
 		}
 		if unicode.IsDigit(r) {
-			if digits < 12 {
+			if digits < significantDigits {
 				b.Digits[digits] = byte(r - '0')
 			}
 			digits++
