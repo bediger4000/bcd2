@@ -10,8 +10,18 @@ var one = Number{
 	Exponent: 0,
 	Digits:   [12]byte{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 }
+var negativeOne = Number{
+	Sign:     1,
+	Exponent: 0,
+	Digits:   [12]byte{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+}
 var two = Number{
 	Sign:     0,
+	Exponent: 0,
+	Digits:   [12]byte{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+}
+var negativeTwo = Number{
+	Sign:     1,
 	Exponent: 0,
 	Digits:   [12]byte{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 }
@@ -96,6 +106,21 @@ func TestAdd(t *testing.T) {
 			name: "1E15+1E0",
 			args: args{x: oneE15, y: one},
 			want: oneE15,
+		},
+		{
+			name: "-1+(-1)",
+			args: args{x: negativeOne, y: negativeOne},
+			want: negativeTwo,
+		},
+		{
+			name: "-1+(+1)",
+			args: args{x: negativeOne, y: one},
+			want: zero,
+		},
+		{
+			name: "(+1)+(-1)",
+			args: args{x: one, y: negativeOne},
+			want: zero,
 		},
 	}
 	for _, tt := range tests {
