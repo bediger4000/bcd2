@@ -77,6 +77,7 @@ func Add(x, y Number) Number {
 	sum.Exponent += big.Exponent
 	if nonZeroDigitCounts == 0 {
 		sum.Exponent = 0
+		sum.Sign = 0
 	}
 
 	return sum
